@@ -69,18 +69,33 @@ workflow:
 
   step_2_identify_format:
     triggers:
-      carousel: ["carrossel", "slides", "sequencia", "passo a passo", "lista"]
+      carousel_standard: ["carrossel", "slides", "sequencia", "passo a passo", "lista"]
+      carousel_x_style: ["formato x", "estilo tweet", "estilo twitter", "formato tweet", "cara de tweet", "post do x"]
       reel: ["reel", "video", "roteiro", "tiktok", "shorts"]
       post: ["post", "feed", "publicacao", "estatico"]
       campaign: ["campanha", "serie", "calendario", "planejamento"]
     action: "Identificar formato e chamar task correspondente"
+    note: "Se detectar keywords de carousel_x_style, ativar skill/carousel-x-style.md e elicitar referencias de marca antes de prosseguir"
+
+  step_2b_web_research:
+    when: "O tema envolve ferramenta especifica, produto, noticia ou dado recente"
+    action: "Buscar na web para verificar fatos antes de produzir conteudo"
+    mandatory: true
+    note: "Nunca inventar detalhes tecnicos sem verificar na web. Usar tavily-web ou WebSearch."
 
   step_3_delegate:
-    carousel:
-      - agent: carousel-creator (interno)
-      - cross_squad: story-chief (hook e arco)
-      - cross_squad: copy-chief (copy dos slides)
-      - agent: image-director (prompts visuais)
+    carousel_standard:
+      - agent: carousel-creator (interno) — estrutura e arco
+      - cross_squad: story-chief — hook e beats narrativos
+      - cross_squad: copy-chief — copy por slide (roteia para especialista por formato)
+      - agent: image-director — prompts DALL-E + instrucoes Canva
+      - agent: social-publisher — caption + hashtags + horario
+    carousel_x_style:
+      - agent: carousel-creator (interno) — elicitar referencias de marca, estrategia e hook
+      - cross_squad: copy-chief — copy tweet-style (max 280 chars/slide, escada de consciencia)
+      - agent: image-director — prompt da capa + HTMLs dos slides + renderizacao Playwright
+      - agent: social-publisher — legenda + hashtags
+      - skill: skills/carousel-x-style.md
     reel:
       - cross_squad: story-chief (roteiro e arco narrativo)
       - cross_squad: copy-chief (script)

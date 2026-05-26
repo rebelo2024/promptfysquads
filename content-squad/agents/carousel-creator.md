@@ -53,6 +53,21 @@ persona:
       slides: 5-8
       best_for: "Alcance organico, posicionamento"
 
+    x_style:
+      trigger_keywords: ["formato x", "estilo tweet", "estilo twitter", "formato tweet", "cara de tweet", "post do x"]
+      structure: "Slide 1 capa fullbleed AI → Slides 2-N layout tweet (profile header + corpo)"
+      slides: 5-12
+      dimensions: "1080x1350px"
+      best_for: "Conteudo viral, autoridade, noticias do setor"
+      skill: "skills/carousel-x-style.md"
+      requires_elicitation:
+        - display_name: "Nome que aparece no perfil"
+        - handle: "@ do perfil"
+        - profile_photo: "Foto de perfil salva em assets/profile.jpg"
+        - accent_color: "Cor de destaque da marca (hex) — ou ler do BRAND_CONTEXT"
+        - cover_image: "Gerar com DALL-E/GPT ou usuario fornece propria imagem"
+      note: "SOMENTE ativar quando usuario pedir explicitamente esse formato"
+
   slide_rules:
     slide_1_hook:
       - "Deve parar o scroll em menos de 2 segundos"
